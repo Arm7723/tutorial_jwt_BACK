@@ -21,13 +21,15 @@ public class ProductoController {
     @Autowired
     ProductoService productoService;
 
-    @GetMapping("/lista")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("/lista")
     public ResponseEntity<List<Producto>> list(){
         List<Producto> list = productoService.list();
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
-    @GetMapping("/detail/{id}")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("/detail/{id}")
     public ResponseEntity<Producto> getById(@PathVariable("id") int id){
         if(!productoService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
@@ -35,7 +37,8 @@ public class ProductoController {
         return new ResponseEntity(producto, HttpStatus.OK);
     }
 
-    @GetMapping("/detailname/{nombre}")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("/detailname/{nombre}")
     public ResponseEntity<Producto> getByNombre(@PathVariable("nombre") String nombre){
         if(!productoService.existsByNombre(nombre))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
@@ -43,7 +46,8 @@ public class ProductoController {
         return new ResponseEntity(producto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody ProductoDto productoDto){
         if(StringUtils.isBlank(productoDto.getNombre()))
@@ -57,7 +61,8 @@ public class ProductoController {
         return new ResponseEntity(new Mensaje("producto creado"), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody ProductoDto productoDto){
         if(!productoService.existsById(id))
@@ -76,7 +81,8 @@ public class ProductoController {
         return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")int id){
         if(!productoService.existsById(id))
